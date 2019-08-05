@@ -1,2 +1,2 @@
 export * from './core'
-export * from './core/animate'
+export { animate as default } from './core/animate'

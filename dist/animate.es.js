@@ -1,7 +1,7 @@
 import { TimelineLite, Linear, Bounce, Power0, Elastic, TweenLite } from 'gsap';
 import { _gsScope, Ease, globals } from 'gsap/TweenLite.js';
 import * as PIXI from 'pixi.js';
-import PixiPlugin from 'gsap/PixiPlugin';
+import PixiPlugin$1 from 'gsap/PixiPlugin';
 
 /*!
  * VERSION: 0.2.2
@@ -1603,6 +1603,516 @@ function swing4(target, duration) {
     ];
     animations.map(function (animation) { return tl.to(target, animation.duration, animation.vars); });
 }
+//# sourceMappingURL=animations.js.map
+
+PixiPlugin.registerPIXI(PIXI);
+var AniController = /** @class */ (function () {
+    function AniController(sprite, file) {
+        var _this = this;
+        this.lastTimeLine = null;
+        this.aniController = { position: null, scaleX: null, scaleY: null, rotation: null, opacity: null, anchor: null };
+        this.aniData = { position: null, scaleX: null, scaleY: null, rotation: null, opacity: null, anchor: null };
+        var xRatio = 1 / 1.92;
+        var yRatio = window.innerHeight / 750;
+        var sWidth = sprite.width / xRatio;
+        var sHeight = sprite.height / xRatio;
+        var rawFile = new XMLHttpRequest();
+        // 读取json文件
+        var readFileCallBack = function (response) {
+            var ani = JSON.parse(response);
+            var totalFrame = ani.op - ani.ip;
+            var duratuion = totalFrame / ani.fr;
+            if (ani.layers) {
+                ani.layers.map(function (layer) {
+                    // get position data
+                    if (layer.ks && layer.ks.p) {
+                        var posAni = _this.animatePosition(sprite, layer.ks.p, totalFrame, duratuion);
+                        var tl_pos_1 = new TimelineLite();
+                        posAni.map(function (ani) {
+                            tl_pos_1.to(sprite, duratuion * ani.t, ani);
+                        });
+                        _this.setPosition(tl_pos_1);
+                        _this.setPositionData(posAni);
+                    }
+                    // get scale data
+                    // every dimension has it's own scale and ease cruve
+                    if (layer.ks && layer.ks.s) {
+                        var scaleAni = _this.animationScale(sprite, layer.ks.s, totalFrame, duratuion);
+                        var tl_scale_x_1 = new TimelineLite();
+                        var tl_scale_y_1 = new TimelineLite();
+                        scaleAni.x.map(function (ani) {
+                            tl_scale_x_1.to(sprite.scale, duratuion * ani.t, ani);
+                        });
+                        scaleAni.y.map(function (ani) {
+                            tl_scale_y_1.to(sprite.scale, duratuion * ani.t, ani);
+                        });
+                        _this.setScaleX(tl_scale_x_1);
+                        _this.setScaleXData(scaleAni.x);
+                        _this.setScaleY(tl_scale_y_1);
+                        _this.setScaleYData(scaleAni.y);
+                    }
+                    // get rotation data
+                    if (layer.ks && layer.ks.r) {
+                        var rotationAni = _this.animationRotation(sprite, layer.ks.r, totalFrame, duratuion);
+                        var tl_rotation_1 = new TimelineLite();
+                        rotationAni.map(function (ani) {
+                            tl_rotation_1.to(sprite, duratuion * ani.t, ani);
+                        });
+                        _this.setRotation(tl_rotation_1);
+                        _this.setRotationData(rotationAni);
+                    }
+                    // get alpha data
+                    if (layer.ks && layer.ks.o) {
+                        var opacityAni = _this.animationOpacity(sprite, layer.ks.o, totalFrame, duratuion);
+                        var tl_opacity_1 = new TimelineLite();
+                        opacityAni.map(function (ani) {
+                            tl_opacity_1.to(sprite, duratuion * ani.t, ani);
+                        });
+                        _this.setOpacity(tl_opacity_1);
+                        _this.setOpacityData(opacityAni);
+                    }
+                    // get the anchor data 
+                    if (layer.ks && layer.ks.a) {
+                        var anchorAni_1 = _this.animationAnchor(sprite, layer.ks.a, totalFrame, duratuion);
+                        var tl_anchor_1 = new TimelineLite();
+                        var delay_1 = 0;
+                        anchorAni_1.map(function (curve, index) {
+                            delay_1 = index === 0 ? curve.delay :
+                                (anchorAni_1[index - 1].delay - curve.delay);
+                            // delay += index === 0 ? curve.delay * 1000 : 
+                            //                     (anchorAni[index - 1].delay - curve.delay) * 1000
+                            var frameCount = 0;
+                            curve.bezier.points.map(function (data, dataIndex) {
+                                var anchorX = (data.point[0]) / sWidth;
+                                var anchorY = (data.point[1]) / sHeight;
+                                var startAnchorX = frameCount === 0 ? 0.5 : curve.bezier.points[dataIndex - 1].point[0] / sWidth;
+                                var startAnchorY = frameCount === 0 ? 0.5 : curve.bezier.points[dataIndex - 1].point[1] / sHeight;
+                                tl_anchor_1.to(sprite, 1 / 60, {
+                                    pixi: {
+                                        anchorX: anchorX,
+                                        anchorY: anchorY
+                                    },
+                                    delay: dataIndex === 0 ? delay_1 : 0
+                                });
+                                // setTimeout( () => {
+                                //     // 变动anchor 的同时要计算位移动
+                                //     const anchorX = (data.point[0] ) / sWidth
+                                //     const anchorY = (data.point[1] ) / sHeight
+                                //     const startAnchorX = frameCount === 0 ? 0.5 : curve.bezier.points[dataIndex - 1].point[0] / sWidth
+                                //     const startAnchorY = frameCount === 0 ? 0.5 : curve.bezier.points[dataIndex - 1].point[1] / sHeight
+                                //     const anchorDiffX = anchorX - startAnchorX
+                                //     const anchorDiffY = anchorY - startAnchorY
+                                //     sprite.anchor.set( (data.point[0] ) / sWidth,
+                                //                        (data.point[1] ) / sHeight,
+                                //                      )
+                                //     console.log('x: '+ anchorX, 'y'+ anchorX, 
+                                //                 'xStart: '+ startAnchorX, 'yStart '+ startAnchorY,
+                                //                 'xDiff: '+ anchorDiffX,'yDiff' +anchorDiffY,
+                                //                 )
+                                //     sprite.x += - (anchorDiffX * sWidth)
+                                //     sprite.y += - (anchorDiffY * sHeight)
+                                // }, delay)
+                                // delay += (1 / 60) * 1000
+                                frameCount++;
+                            });
+                        });
+                        _this.setAnchor(tl_anchor_1);
+                        _this.setAnchorData(anchorAni_1);
+                    }
+                    // set lastFrame timeline
+                    _this.setLastFrameTimeline();
+                    // trigger registered event callback
+                    _this.triggerReisteredCallback();
+                });
+            }
+        };
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function () {
+            if (rawFile.readyState === 4 && rawFile.status === 200) {
+                readFileCallBack(rawFile.response);
+            }
+        };
+        rawFile.send(null);
+    }
+    AniController.prototype.buildPath = function (t, e, r, i, frames) {
+        var s = (t[0] + "_" + t[1] + "_" + e[0] + "_" + e[1] + "_" + r[0] + "_" + r[1] + "_" + i[0] + "_" + i[1]).replace(/\./g, "p");
+        var a;
+        var n;
+        var o;
+        var h;
+        var l;
+        var p;
+        var m;
+        var f = frames;
+        var c = 0;
+        var d = null;
+        2 === t.length && (t[0] !== e[0] || t[1] !== e[1]) && this.y(t[0], t[1], e[0], e[1], t[0] + r[0], t[1] + r[1]) && this.y(t[0], t[1], e[0], e[1], e[0] + i[0], e[1] + i[1]) && (f = 2);
+        var u = {
+            segmentLength: 0,
+            points: new Array(t)
+        };
+        for (o = r.length, a = 0; a < f; a += 1) {
+            var timeSegmentx = this.getBezierCruveTimex(a / (f - 1));
+            var timeSegmenty = this.getBezierCruveTimey(a / (f - 1));
+            // l = (timeSegmenty - 206) / ( 888 - 206)
+            l = (a / (f - 1));
+            for (m = this.createSizedArray(o), n = p = 0; n < o; n += 1) {
+                h = Math.pow(1 - l, 3) * t[n] + 3 * Math.pow(1 - l, 2) * l * (t[n] + r[n]) + 3 * (1 - l) * Math.pow(l, 2) * (e[n] + i[n]) + Math.pow(l, 3) * e[n];
+                m[n] = h;
+                null !== d && (p += Math.pow(m[n] - d[n], 2));
+            }
+            c += p = Math.sqrt(p);
+            u.points[a] = {
+                partialLength: p,
+                point: m
+            };
+            d = m;
+        }
+        u.segmentLength = c;
+        var test = u;
+        return test;
+    };
+    AniController.prototype.getBezierCruveTimex = function (time) {
+        var timeSegment = Math.pow(1 - time, 3) * 120 + 3 * Math.pow(1 - time, 2) * time * (120) + 3 * (1 - time) * Math.pow(time, 2) * (127) + Math.pow(time, 3) * 828;
+        return timeSegment;
+    };
+    AniController.prototype.getBezierCruveTimey = function (time) {
+        var timeSegment = Math.pow(1 - time, 3) * 206 + 3 * Math.pow(1 - time, 2) * time * (888) + 3 * (1 - time) * Math.pow(time, 2) * (206) + Math.pow(time, 3) * 888;
+        return timeSegment;
+    };
+    AniController.prototype.y = function (t, e, r, i, s, a) {
+        var n = t * i + e * s + r * a - s * i - a * t - r * e;
+        return -.001 < n && n < .001;
+    };
+    AniController.prototype.createSizedArray = function (t) {
+        return Array.apply(null, {
+            length: t
+        });
+    };
+    AniController.prototype.animatePosition = function (sprite, data, totalFrame, duration) {
+        var animation = [];
+        if (data.k && data.k[0].i) {
+            var startPoint_1 = { x: 0, y: 0 };
+            var endPoint_1 = { x: 0, y: 0 };
+            var totalDelay_1 = 0;
+            if (data.k[0].t > 0) {
+                totalDelay_1 += data.k[0].t / totalFrame;
+            }
+            data.k.map(function (d, index) {
+                // get ease string
+                var easeString = '';
+                if (data.k[index].i && data.k[index].o) {
+                    easeString = 'M0,0 C' + data.k[index].o.x + ',' + data.k[index].o.y + ' ' +
+                        data.k[index].i.x + ',' + data.k[index].i.y + ' 1,1';
+                }
+                if (data.k[index + 1]) {
+                    // get postion point
+                    var xValue = data.k[index + 1].s[0] - data.k[index].s[0];
+                    var yValue = data.k[index + 1].s[1] - data.k[index].s[1];
+                    if (index === 0) {
+                        startPoint_1 = {
+                            x: sprite.x,
+                            y: sprite.y
+                        };
+                        endPoint_1 = {
+                            x: sprite.x + xValue,
+                            y: sprite.y + yValue
+                        };
+                    }
+                    else {
+                        startPoint_1 = endPoint_1;
+                        endPoint_1 = {
+                            x: startPoint_1.x + xValue,
+                            y: startPoint_1.y + yValue
+                        };
+                    }
+                    // get bezier cruve control point
+                    var bezierPoints = [];
+                    bezierPoints.push(startPoint_1); // start point
+                    bezierPoints.push({
+                        x: startPoint_1.x + data.k[index].to[0],
+                        y: startPoint_1.y + data.k[index].to[1]
+                    }); // controll point
+                    bezierPoints.push({
+                        x: endPoint_1.x + data.k[index].ti[0],
+                        y: endPoint_1.y + data.k[index].ti[1]
+                    }); // controll point
+                    bezierPoints.push(endPoint_1); // end point
+                    animation.push({
+                        bezier: {
+                            type: 'cubic',
+                            values: bezierPoints
+                        },
+                        ease: CustomEase.create("custom", easeString),
+                        t: (data.k[index + 1].t - data.k[index].t) / totalFrame,
+                        delay: totalDelay_1 * duration,
+                        lastFrame: (data.k[index + 1].t / totalFrame) === 1 ? true : false
+                    });
+                }
+                else {
+                    return;
+                }
+            });
+        }
+        return animation;
+    };
+    // currently ignore dimension z
+    AniController.prototype.animationScale = function (sprite, data, totalFrame, duration) {
+        var animation = { x: null, y: null };
+        var animationX = [];
+        var animationY = [];
+        var easeStringX = '';
+        var easeStringY = '';
+        var totalDelay = 0;
+        if (data.k[0].t > 0) {
+            totalDelay += data.k[0].t / totalFrame;
+        }
+        if (data.k && data.k[0].i) {
+            data.k.map(function (d, index) {
+                if (data.k[index].i && data.k[index].o) {
+                    easeStringX = 'M0,0 C' + data.k[index].o.x[0] + ',' + data.k[index].o.y[0] + ' ' +
+                        data.k[index].i.x[0] + ',' + data.k[index].i.y[0] + ' 1,1';
+                    easeStringY = 'M0,0 C' + data.k[index].o.x[1] + ',' + data.k[index].o.y[1] + ' ' +
+                        data.k[index].i.x[1] + ',' + data.k[index].i.y[1] + ' 1,1';
+                }
+                if (data.k[index + 1]) {
+                    animationX.push({
+                        x: data.k[index + 1].s[0] / 100,
+                        ease: CustomEase.create("custom", easeStringX),
+                        t: (data.k[index + 1].t - data.k[index].t) / totalFrame,
+                        delay: totalDelay * duration,
+                        lastFrame: (data.k[index + 1].t / totalFrame) === 1 ? true : false
+                    });
+                    animationY.push({
+                        y: data.k[index + 1].s[1] / 100,
+                        ease: CustomEase.create("custom", easeStringY),
+                        t: (data.k[index + 1].t - data.k[index].t) / totalFrame,
+                        delay: totalDelay * duration,
+                        lastFrame: (data.k[index + 1].t / totalFrame) === 1 ? true : false
+                    });
+                }
+                else {
+                    return;
+                }
+            });
+        }
+        animation.x = animationX;
+        animation.y = animationY;
+        return animation;
+    };
+    AniController.prototype.animationRotation = function (sprite, data, totalFrame, duration) {
+        var animation = [];
+        var easeString = '';
+        var totalDelay = 0;
+        if (data.k[0].t > 0) {
+            totalDelay += data.k[0].t / totalFrame;
+        }
+        if (data.k && data.k[0].i) {
+            data.k.map(function (d, index) {
+                if (data.k[index + 1]) {
+                    if (data.k[index].i && data.k[index].o) {
+                        easeString = 'M0,0 C' + data.k[index].o.x[0] + ',' + data.k[index].o.y[0] + ' ' +
+                            data.k[index].i.x[0] + ',' + data.k[index].i.y[0] + ' 1,1';
+                    }
+                    animation.push({
+                        rotation: (data.k[index + 1].s[0] - data.k[index].s[0]) * Math.PI / 180,
+                        ease: CustomEase.create("custom", easeString),
+                        t: (data.k[index + 1].t - data.k[index].t) / totalFrame,
+                        delay: totalDelay * duration,
+                        lastFrame: (data.k[index + 1].t / totalFrame) === 1 ? true : false
+                    });
+                }
+                else {
+                    return;
+                }
+            });
+        }
+        return animation;
+    };
+    AniController.prototype.animationOpacity = function (srpite, data, totalFrame, duration) {
+        var animation = [];
+        var easeString = '';
+        var totalDelay = 0;
+        if (data.k[0].t > 0) {
+            totalDelay += data.k[0].t / totalFrame;
+        }
+        if (data.k && data.k[0].i) {
+            data.k.map(function (d, index) {
+                if (data.k[index + 1]) {
+                    if (data.k[index].i && data.k[index].o) {
+                        easeString = 'M0,0 C' + data.k[index].o.x[0] + ',' + data.k[index].o.y[0] + ' ' +
+                            data.k[index].i.x[0] + ',' + data.k[index].i.y[0] + ' 1,1';
+                    }
+                    animation.push({
+                        alpha: data.k[index + 1].s[0] / 100,
+                        ease: CustomEase.create("custom", easeString),
+                        t: (data.k[index + 1].t - data.k[index].t) / totalFrame,
+                        delay: totalDelay * duration,
+                        lastFrame: (data.k[index].t / totalFrame) === 1 ? true : false
+                    });
+                }
+                else {
+                    return;
+                }
+            });
+        }
+        return animation;
+    };
+    AniController.prototype.animationAnchor = function (sprite, data, totalFrame, duration) {
+        var _this = this;
+        var animation = [];
+        if (data.k && data.k[0].i) {
+            var startPoint_2 = [0, 0, 0];
+            var endPoint_2 = [0, 0, 0];
+            var time_1 = 0;
+            var totalDelay_2 = 0;
+            if (data.k[0].t > 0) {
+                totalDelay_2 += data.k[0].t / totalFrame;
+            }
+            data.k.map(function (d, index) {
+                // get ease string
+                var easeString = '';
+                if (data.k[index].i && data.k[index].o) {
+                    easeString = 'M0,0 C' + data.k[index].o.x + ',' + data.k[index].o.y + ' ' +
+                        data.k[index].i.x + ',' + data.k[index].i.y + ' 1,1';
+                }
+                if (data.k[index + 1]) {
+                    startPoint_2 = [
+                        data.k[index].s[0],
+                        data.k[index].s[1],
+                        data.k[index].s[2],
+                    ];
+                    endPoint_2 = [
+                        data.k[index + 1].s[0],
+                        data.k[index + 1].s[1],
+                        data.k[index + 1].s[2],
+                    ];
+                    time_1 = (data.k[index + 1].t - data.k[index].t) / totalFrame,
+                        animation.push({
+                            bezier: _this.buildPath(startPoint_2, endPoint_2, data.k[index].to, data.k[index].ti, time_1 * duration * 60),
+                            ease: CustomEase.create("custom", easeString),
+                            t: time_1,
+                            delay: totalDelay_2 * duration,
+                            lastFrame: (data.k[index + 1].t / totalFrame) === 1 ? true : false
+                        });
+                }
+                else {
+                    return;
+                }
+            });
+        }
+        return animation;
+    };
+    AniController.prototype.triggerReisteredCallback = function () {
+        if (this.loadedCb)
+            this.loadedCb();
+        if (this.completeCb)
+            this.completeCb();
+        if (this.reverseCompleteCb)
+            this.reverseCompleteCb();
+    };
+    AniController.prototype.play = function () {
+        for (var property in this.aniController) {
+            if (this.aniController.hasOwnProperty(property) && this.aniController[property] !== null) {
+                this.aniController[property].play();
+            }
+        }
+    };
+    AniController.prototype.stop = function () {
+        for (var property in this.aniController) {
+            if (this.aniController.hasOwnProperty(property) && this.aniController[property] !== null) {
+                this.aniController[property].pause();
+            }
+        }
+    };
+    AniController.prototype.reverse = function () {
+        for (var property in this.aniController) {
+            if (this.aniController.hasOwnProperty(property) && this.aniController[property] !== null) {
+                this.aniController[property].reverse();
+            }
+        }
+    };
+    AniController.prototype.setPosition = function (pos) {
+        this.aniController.position = pos;
+    };
+    AniController.prototype.setPositionData = function (pos) {
+        this.aniData.position = pos;
+    };
+    AniController.prototype.setScaleX = function (scaleX) {
+        this.aniController.scaleX = scaleX;
+    };
+    AniController.prototype.setScaleXData = function (scaleX) {
+        this.aniData.scaleX = scaleX;
+    };
+    AniController.prototype.setScaleY = function (scaleY) {
+        this.aniController.scaleY = scaleY;
+    };
+    AniController.prototype.setScaleYData = function (scaleY) {
+        this.aniData.scaleY = scaleY;
+    };
+    AniController.prototype.setRotation = function (rotation) {
+        this.aniController.rotation = rotation;
+    };
+    AniController.prototype.setRotationData = function (rotation) {
+        this.aniData.rotation = rotation;
+    };
+    AniController.prototype.setOpacity = function (opacity) {
+        this.aniController.opacity = opacity;
+    };
+    AniController.prototype.setOpacityData = function (opacity) {
+        this.aniData.opacity = opacity;
+    };
+    AniController.prototype.setAnchor = function (anchor) {
+        this.aniController.anchor = anchor;
+    };
+    AniController.prototype.setAnchorData = function (anchor) {
+        this.aniData.anchor = anchor;
+    };
+    AniController.prototype.setLastFrameTimeline = function () {
+        for (var property in this.aniData) {
+            if (this.aniData.hasOwnProperty(property) && this.aniData[property] !== null) {
+                for (var _i = 0, _a = this.aniData[property]; _i < _a.length; _i++) {
+                    var data = _a[_i];
+                    if (data.lastFrame) {
+                        this.lastTimeLine = this.aniController[property];
+                        return;
+                    }
+                }
+            }
+        }
+    };
+    AniController.prototype.on = function (status, callback) {
+        var _this = this;
+        if (this.lastTimeLine === null) {
+            switch (status) {
+                case 'loadComplete':
+                    this.loadedCb = callback;
+                case 'complete':
+                    this.completeCb = function () { _this.lastTimeLine.eventCallback('onComplete', function () { return callback(); }); };
+                    break;
+                case 'reverseComplete':
+                    this.reverseCompleteCb = function () { _this.lastTimeLine.eventCallback('onReverseComplete', function () { return callback(); }); };
+                    break;
+            }
+        }
+        else {
+            switch (status) {
+                case 'complete':
+                    this.lastTimeLine.eventCallback('onComplete', function () { return callback(); });
+                    break;
+                case 'reverseComplete':
+                    this.lastTimeLine.eventCallback('onReverseComplete', function () { return callback(); });
+                    break;
+            }
+        }
+    };
+    return AniController;
+}());
+function LoadAnimation(target, JSON) {
+    return new AniController(target, JSON);
+}
+//# sourceMappingURL=LoadAnimation.js.map
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1642,7 +2152,7 @@ function __rest(s, e) {
     return t;
 }
 
-PixiPlugin.registerPIXI(PIXI);
+PixiPlugin$1.registerPIXI(PIXI);
 function animation(target, options) {
     var ease = options.ease, _a = options.delay, _b = options.duration, duration = _b === void 0 ? 1000 : _b, _c = options.repeat, repeat = _c === void 0 ? 0 : _c, _d = options.onStart, onStart = _d === void 0 ? function () { } : _d, _e = options.onUpdate, onUpdate = _e === void 0 ? function () { } : _e, _f = options.onComplete, onComplete = _f === void 0 ? function () { } : _f, _g = options.onReverseComplete, onReverseComplete = _g === void 0 ? function () { } : _g, rest = __rest(options, ["ease", "delay", "duration", "repeat", "onStart", "onUpdate", "onComplete", "onReverseComplete"]);
     var count = 1;
@@ -1673,6 +2183,8 @@ function animation(target, options) {
 function animate(target, options) {
     animation(target, options);
 }
+//# sourceMappingURL=animate.js.map
 
-export { animate, blink, bomb1, breakIn, elasticMove, elasticScale, foolishIn, freeFall, heartBeat, hingeOut, jelly, shakeInAlarm, shakeInHard, shakeInHorz, shakeInRotate, shakeInVetc, spiralRotateIn, swashOut, swing1, swing2, swing3, swing4, topShockIn, wheelRotateIn };
+export default animate;
+export { LoadAnimation, blink, bomb1, breakIn, elasticMove, elasticScale, foolishIn, freeFall, heartBeat, hingeOut, jelly, shakeInAlarm, shakeInHard, shakeInHorz, shakeInRotate, shakeInVetc, spiralRotateIn, swashOut, swing1, swing2, swing3, swing4, topShockIn, wheelRotateIn };
 //# sourceMappingURL=animate.es.js.map

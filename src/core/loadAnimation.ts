@@ -1,3 +1,4 @@
+import * as PIXI from 'pixi.js'
 // @ts-ignore
 import { TimelineLite } from 'gsap'
 import { CustomEase } from './customEase'
@@ -568,10 +569,6 @@ class AniController {
     }
 }
 
-export default {
-    install: (target: any) => {
-        target.prototype.loadAnimation = function (this: any, file: any) {
-            return new AniController(this, file)
-        }
-    }
+export function LoadAnimation(target: PIXI.Sprite, JSON: any) {
+    return new AniController(target, JSON)
 }

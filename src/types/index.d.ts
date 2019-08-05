@@ -1,5 +1,3 @@
-declare module 'gsap/PixiPlugin'
-
 export interface AnimateOptions {
     // pixi.js
     x?: number
@@ -18,7 +16,7 @@ export interface AnimateOptions {
     onReverseComplete?: (animation: object) => {}
 }
 
-export function animate(target: any, options: AnimateOptions): void
+export default function animate(target: any, options: AnimateOptions): void
 
 // Animations
 export function blink(target: any, duration: number, repeat: number): any
