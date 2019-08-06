@@ -22,5 +22,3 @@ $ yarn add @amoy/animate
 # or
 $ npm i @amoy/animate
 ```
-
-https://img.shields.io/npm/dt/@amoy/animate.svg
