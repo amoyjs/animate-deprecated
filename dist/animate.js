@@ -1606,7 +1606,32 @@
         ];
         animations.map(function (animation) { return tl.to(target, animation.duration, animation.vars); });
     }
-    //# sourceMappingURL=animations.js.map
+
+    var animations = /*#__PURE__*/Object.freeze({
+        blink: blink,
+        shakeInAlarm: shakeInAlarm,
+        shakeInHorz: shakeInHorz,
+        shakeInVetc: shakeInVetc,
+        shakeInRotate: shakeInRotate,
+        shakeInHard: shakeInHard,
+        bomb1: bomb1,
+        freeFall: freeFall,
+        elasticScale: elasticScale,
+        elasticMove: elasticMove,
+        spiralRotateIn: spiralRotateIn,
+        wheelRotateIn: wheelRotateIn,
+        topShockIn: topShockIn,
+        breakIn: breakIn,
+        swashOut: swashOut,
+        foolishIn: foolishIn,
+        hingeOut: hingeOut,
+        heartBeat: heartBeat,
+        jelly: jelly,
+        swing1: swing1,
+        swing2: swing2,
+        swing3: swing3,
+        swing4: swing4
+    });
 
     PixiPlugin.registerPIXI(PIXI);
     var AniController = /** @class */ (function () {
@@ -2115,7 +2140,6 @@
     function LoadAnimation(target, JSON) {
         return new AniController(target, JSON);
     }
-    //# sourceMappingURL=LoadAnimation.js.map
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -2186,7 +2210,31 @@
     function animate(target, options) {
         animation(target, options);
     }
-    //# sourceMappingURL=animate.js.map
+
+    var queryAnimate = {
+        animate: function (options) {
+            for (var i = 0; i < this.length; i++) {
+                animate(this[i], options);
+            }
+        }
+    };
+    var keys = Object.keys(animations);
+    var values = Object.values(animations);
+    keys.map(function (animation, index) {
+        queryAnimate[animation] = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            for (var i = 0; i < this.length; i++) {
+                // @ts-ignore
+                values[index].apply(values, [this[i]].concat(args));
+            }
+        };
+    });
+    // @ts-ignore
+    if (window.query)
+        window.query.extend(queryAnimate);
 
     exports.LoadAnimation = LoadAnimation;
     exports.blink = blink;
@@ -2200,6 +2248,7 @@
     exports.heartBeat = heartBeat;
     exports.hingeOut = hingeOut;
     exports.jelly = jelly;
+    exports.queryAnimate = queryAnimate;
     exports.shakeInAlarm = shakeInAlarm;
     exports.shakeInHard = shakeInHard;
     exports.shakeInHorz = shakeInHorz;

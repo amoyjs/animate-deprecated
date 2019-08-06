@@ -16,7 +16,9 @@ export interface AnimateOptions {
     onReverseComplete?: (animation: object) => {}
 }
 
-export default function animate(target: any, options: AnimateOptions): void
+export class queryAnimate {
+
+}
 
 // Animations
 export function blink(target: any, duration: number, repeat: number): any
@@ -42,3 +44,5 @@ export function swing1(target: any, duration?: number): any
 export function swing2(target: any, duration?: number): any
 export function swing3(target: any, duration?: number): any
 export function swing4(target: any, duration?: number): any
+
+export default function animate(target: any, options: AnimateOptions): void
