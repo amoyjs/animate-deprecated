@@ -8,6 +8,8 @@ PixiPlugin.registerPIXI(PIXI)
 
 function animation(target: any, options: any) {
     const {
+        to = {},
+        from = {},
         ease,
         delay = 0,
         duration = 1000,
@@ -19,9 +21,12 @@ function animation(target: any, options: any) {
         ...rest
     } = options
     let count = 1
-    const animate = TweenLite.to(target, duration / 1000, {
+    const action = Object.keys(to).length > 0 ? 'to' : (Object.keys(from).length > 0 ? 'from' : 'to')
+    const props = action === 'to' ? to : from
+    const animate = TweenLite[action](target, duration / 1000, {
         pixi: {
             ...rest,
+            ...props,
         },
         onStart() {
             onStart(animate)

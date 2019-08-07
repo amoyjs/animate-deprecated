@@ -1,4 +1,4 @@
-import { TimelineLite, Linear, Bounce, Power0, Elastic, TweenLite } from 'gsap';
+import { TweenLite, TimelineLite, Linear, Bounce, Power0, Elastic } from 'gsap';
 import { _gsScope, Ease, globals } from 'gsap/TweenLite.js';
 import * as PIXI from 'pixi.js';
 import PixiPlugin$1 from 'gsap/PixiPlugin';
@@ -379,8 +379,102 @@ _gsScope._gsDefine("easing.CustomEase", ["easing.Ease"], function() {
 
 var CustomEase = globals.CustomEase;
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+PixiPlugin$1.registerPIXI(PIXI);
+function animation(target, options) {
+    var _a = options.to, to = _a === void 0 ? {} : _a, _b = options.from, from = _b === void 0 ? {} : _b, ease = options.ease, _c = options.delay, _d = options.duration, duration = _d === void 0 ? 1000 : _d, _e = options.repeat, repeat = _e === void 0 ? 0 : _e, _f = options.onStart, onStart = _f === void 0 ? function () { } : _f, _g = options.onUpdate, onUpdate = _g === void 0 ? function () { } : _g, _h = options.onComplete, onComplete = _h === void 0 ? function () { } : _h, _j = options.onReverseComplete, onReverseComplete = _j === void 0 ? function () { } : _j, rest = __rest(options, ["to", "from", "ease", "delay", "duration", "repeat", "onStart", "onUpdate", "onComplete", "onReverseComplete"]);
+    var count = 1;
+    var action = Object.keys(to).length > 0 ? 'to' : (Object.keys(from).length > 0 ? 'from' : 'to');
+    var props = action === 'to' ? to : from;
+    var animate = TweenLite[action](target, duration / 1000, {
+        pixi: __assign({}, rest, props),
+        onStart: function () {
+            onStart(animate);
+        },
+        onComplete: function () {
+            onComplete(animate);
+            if (repeat === 'infinite' || count < repeat) {
+                count++;
+            }
+        },
+        onUpdate: function () {
+            var progress = (animate.progress() * 100).toFixed(2);
+            onUpdate(progress, animate);
+        },
+        onReverseComplete: function () {
+            if (repeat === 'infinite' || count < repeat) {
+                animate.restart();
+                count++;
+            }
+            onReverseComplete(animate);
+        }
+    });
+}
+function animate(target, options) {
+    animation(target, options);
+}
+
 // @ts-ignore
 var tl = new TimelineLite();
+function moveTo(target, x, y, duration, ease) {
+    var position = {
+        x: 0,
+        y: 0
+    };
+    if (typeof x === 'number' && typeof y === 'number') {
+        position.x = x;
+        position.y = y;
+    }
+    if (typeof x === 'object') {
+        position.x = x.x;
+        position.y = x.y;
+        duration = y;
+        ease = duration;
+    }
+    animate(target, {
+        x: position.x,
+        y: position.y,
+        ease: ease,
+        duration: duration
+    });
+}
 function blink(target, duration, repeat) {
     var totalRepeat = 0;
     repeatBlink();
@@ -1605,6 +1699,7 @@ function swing4(target, duration) {
 }
 
 var animations = /*#__PURE__*/Object.freeze({
+    moveTo: moveTo,
     blink: blink,
     shakeInAlarm: shakeInAlarm,
     shakeInHorz: shakeInHorz,
@@ -2138,76 +2233,6 @@ function LoadAnimation(target, JSON) {
     return new AniController(target, JSON);
 }
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
-***************************************************************************** */
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
-function __rest(s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-}
-
-PixiPlugin$1.registerPIXI(PIXI);
-function animation(target, options) {
-    var ease = options.ease, _a = options.delay, _b = options.duration, duration = _b === void 0 ? 1000 : _b, _c = options.repeat, repeat = _c === void 0 ? 0 : _c, _d = options.onStart, onStart = _d === void 0 ? function () { } : _d, _e = options.onUpdate, onUpdate = _e === void 0 ? function () { } : _e, _f = options.onComplete, onComplete = _f === void 0 ? function () { } : _f, _g = options.onReverseComplete, onReverseComplete = _g === void 0 ? function () { } : _g, rest = __rest(options, ["ease", "delay", "duration", "repeat", "onStart", "onUpdate", "onComplete", "onReverseComplete"]);
-    var count = 1;
-    var animate = TweenLite.to(target, duration / 1000, {
-        pixi: __assign({}, rest),
-        onStart: function () {
-            onStart(animate);
-        },
-        onComplete: function () {
-            onComplete(animate);
-            if (repeat === 'infinite' || count < repeat) {
-                count++;
-            }
-        },
-        onUpdate: function () {
-            var progress = (animate.progress() * 100).toFixed(2);
-            onUpdate(progress, animate);
-        },
-        onReverseComplete: function () {
-            if (repeat === 'infinite' || count < repeat) {
-                animate.restart();
-                count++;
-            }
-            onReverseComplete(animate);
-        }
-    });
-}
-function animate(target, options) {
-    animation(target, options);
-}
-
 var queryAnimate = {
     animate: function (options) {
         for (var i = 0; i < this.length; i++) {
@@ -2234,5 +2259,5 @@ if (window.query)
     window.query.extend(queryAnimate);
 
 export default animate;
-export { LoadAnimation, blink, bomb1, breakIn, elasticMove, elasticScale, foolishIn, freeFall, heartBeat, hingeOut, jelly, queryAnimate, shakeInAlarm, shakeInHard, shakeInHorz, shakeInRotate, shakeInVetc, spiralRotateIn, swashOut, swing1, swing2, swing3, swing4, topShockIn, wheelRotateIn };
+export { LoadAnimation, blink, bomb1, breakIn, elasticMove, elasticScale, foolishIn, freeFall, heartBeat, hingeOut, jelly, moveTo, queryAnimate, shakeInAlarm, shakeInHard, shakeInHorz, shakeInRotate, shakeInVetc, spiralRotateIn, swashOut, swing1, swing2, swing3, swing4, topShockIn, wheelRotateIn };
 //# sourceMappingURL=animate.es.js.map
