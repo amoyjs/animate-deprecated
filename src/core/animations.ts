@@ -1,8 +1,33 @@
 // @ts-ignore
 import { TimelineLite, Linear, Power0, Bounce, Elastic } from 'gsap'
 import CustomEase from './customEase'
+import { animate } from './animate'
 
 const tl = new TimelineLite()
+
+export function moveTo(target: any, x: any, y: any, duration: number, ease: any) {
+    const position = {
+        x: 0,
+        y: 0,
+    }
+    if (typeof x === 'number' && typeof y === 'number') {
+        position.x = x
+        position.y = y
+    }
+    if (typeof x === 'object') {
+        position.x = x.x
+        position.y = x.y
+        duration = y
+        ease = duration
+    }
+
+    animate(target, {
+        x: position.x,
+        y: position.y,
+        ease,
+        duration,
+    })
+}
 
 export function blink(target: any, duration: number, repeat: number) {
     let totalRepeat = 0
