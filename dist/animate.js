@@ -450,12 +450,27 @@
             }
         });
     }
+    /**
+     * animate
+     *
+     * @param target - Animation target
+     * @param { AnimateOptions } options - Animation options
+     */
     function animate(target, options) {
         animation(target, options);
     }
 
     // @ts-ignore
     var tl = new gsap.TimelineLite();
+    /**
+     * moveTo
+     *
+     * @param { Object } target - target
+     * @param { Number } x - coordinate x
+     * @param { Number } y - coordinate y
+     * @param { Number } duration - animation duration
+     * @param { String } ease - animation timing function
+     */
     function moveTo(target, x, y, duration, ease) {
         var position = {
             x: 0,
@@ -478,6 +493,13 @@
             duration: duration
         });
     }
+    /**
+     * blink
+     *
+     * @param { Object } target - target
+     * @param { Number } duration - animation duration
+     * @param { Boolean } repeat - animation repeat times
+     */
     function blink(target, duration, repeat) {
         var totalRepeat = 0;
         repeatBlink();
@@ -498,13 +520,20 @@
             }
         }
     }
+    /**
+     * shakeInAlarm
+     *
+     * @param { Object } target - target
+     *
+     * @description - ['shakeInHorz', 'shakeInVetc', 'shakeInRotate', 'shakeInHard'] also except a param `target`
+     */
     function shakeInAlarm(target) {
         var animations = [{
                 duration: 0.01,
                 vars: {
                     pixi: {
                         rotation: 5,
-                        x: "+=10"
+                        x: '+=10'
                     },
                     ease: gsap.Linear.easeNone
                 }
@@ -513,7 +542,7 @@
                 vars: {
                     pixi: {
                         rotation: -5,
-                        x: "-=20"
+                        x: '-=20'
                     },
                     ease: gsap.Linear.easeNone
                 }
@@ -527,7 +556,7 @@
                 duration: 0.01,
                 vars: {
                     pixi: {
-                        x: "+=10"
+                        x: '+=10'
                     },
                     ease: gsap.Linear.easeNone
                 }
@@ -535,7 +564,7 @@
                 duration: 0.01,
                 vars: {
                     pixi: {
-                        x: "-=20"
+                        x: '-=20'
                     },
                     ease: gsap.Linear.easeNone
                 }
@@ -550,7 +579,7 @@
                 duration: 0.01,
                 vars: {
                     pixi: {
-                        y: "+=10"
+                        y: '+=10'
                     },
                     ease: gsap.Linear.easeNone
                 }
@@ -559,7 +588,7 @@
                 duration: 0.01,
                 vars: {
                     pixi: {
-                        y: "-=20"
+                        y: '-=20'
                     },
                     ease: gsap.Linear.easeNone
                 }
@@ -598,78 +627,78 @@
     function shakeInHard(target) {
         var aniArray = [
             {
-                x: "-=7",
-                y: "+=5",
+                x: '-=7',
+                y: '+=5',
                 rotation: 1.5 * Math.PI / 180,
                 ease: gsap.Linear.easeIn
             }, {
-                x: "+=5",
-                y: "-=5",
+                x: '+=5',
+                y: '-=5',
                 rotation: 1.5 * Math.PI / 180,
                 ease: gsap.Linear.easeIn
             }, {
-                x: "-=2",
-                y: "+=8",
+                x: '-=2',
+                y: '+=8',
                 rotation: 1.5 * Math.PI / 180,
                 ease: gsap.Linear.easeIn
             }, {
-                x: "-=7",
-                y: "+=1",
+                x: '-=7',
+                y: '+=1',
                 rotation: -(2.5 * Math.PI / 180),
                 ease: gsap.Linear.easeIn
             }, {
-                x: "-=2",
-                y: "+=8",
+                x: '-=2',
+                y: '+=8',
                 rotation: 3.5 * Math.PI / 180,
                 ease: gsap.Linear.easeIn
             }, {
-                x: "-=3",
-                y: "-=8",
+                x: '-=3',
+                y: '-=8',
                 rotation: -(1.5 * Math.PI / 180),
                 ease: gsap.Linear.easeIn
             }, {
-                x: "-=8",
-                y: "-=7",
+                x: '-=8',
+                y: '-=7',
                 rotation: 2.5 * Math.PI / 180,
                 ease: gsap.Linear.easeIn
             }, {
-                x: "+=0",
-                y: "+=1",
+                x: '+=0',
+                y: '+=1',
                 rotation: 0.5 * Math.PI / 180,
                 ease: gsap.Linear.easeIn
             }, {
-                x: "-=2",
-                y: "-=1",
+                x: '-=2',
+                y: '-=1',
                 rotation: -(1.5 * Math.PI / 180),
                 ease: gsap.Linear.easeIn
             }, {
-                x: "+=7",
-                y: "+=0",
+                x: '+=7',
+                y: '+=0',
                 rotation: -(2.5 * Math.PI / 180),
                 ease: gsap.Linear.easeIn
             }, {
-                x: "+=8",
-                y: "-=6",
+                x: '+=8',
+                y: '-=6',
                 rotation: -(1.5 * Math.PI / 180),
                 ease: gsap.Linear.easeIn
             }, {
-                x: "+=1",
-                y: "-=4",
+                x: '+=1',
+                y: '-=4',
                 rotation: -(0.5 * Math.PI / 180),
                 ease: gsap.Linear.easeIn
             }, {
-                x: "-=2",
-                y: "+=9",
+                x: '-=2',
+                y: '+=9',
                 rotation: 3.5 * Math.PI / 180,
                 ease: gsap.Linear.easeIn
             }, {
-                x: "+=1",
-                y: "-=5",
+                x: '+=1',
+                y: '-=5',
                 rotation: -(1.5 * Math.PI / 180),
                 ease: gsap.Linear.easeIn
             }, {
-                x: "-=2",
-                y: "+=7",
+                x: '-=2',
+                y: '+=7',
                 rotation: 0.5 * Math.PI / 180,
                 ease: gsap.Linear.easeIn
             },
@@ -680,10 +709,21 @@
         tl.eventCallback('onComplete', function () { tl.reverse(); });
         tl.eventCallback('onReverseComplete', function () { tl.restart(); });
     }
+    /**
+     *
+     * @param { Object } target - target
+     * @param { Number } duration - animation duration
+     *
+     * @description - ['freeFall', 'elasticScale', 'elasticMove',
+     * 'spiralRotateIn', 'wheelRotateIn', 'topShockIn', 'breakIn',
+     * 'swashOut', 'foolishIn', 'hingeOut', 'heartBeat', 'jelly',
+     * 'swing1', 'swing2', 'swing3', 'swing4']
+     * also except params `target`, `duration`
+     */
     function bomb1(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -696,7 +736,7 @@
                         blur: 20,
                         alpha: 0
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
         ];
@@ -708,7 +748,7 @@
     function freeFall(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -717,7 +757,7 @@
                 duration: 0.01,
                 vars: {
                     pixi: {
-                        y: "-= 300"
+                        y: '-= 300'
                     }
                 }
             },
@@ -726,7 +766,7 @@
                 duration: 1 * duration,
                 vars: {
                     pixi: {
-                        y: "+= 300"
+                        y: '+= 300'
                     },
                     ease: gsap.Bounce.easeOut
                 }
@@ -737,7 +777,7 @@
     function elasticScale(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -807,7 +847,7 @@
     function elasticMove(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -816,7 +856,7 @@
                 duration: 0.01 * duration,
                 vars: {
                     pixi: {
-                        y: "-= 300"
+                        y: '-= 300'
                     }
                 }
             },
@@ -825,7 +865,7 @@
                 duration: 1 * duration,
                 vars: {
                     pixi: {
-                        y: "+= 300"
+                        y: '+= 300'
                     },
                     ease: gsap.Elastic.easeOut.config(0.4, 0.3)
                 }
@@ -836,7 +876,7 @@
     function spiralRotateIn(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -850,7 +890,7 @@
                         anchorY: 1,
                         scale: 0,
                         rotation: 360,
-                        y: "+=" + ((target.height))
+                        y: '+=' + ((target.height))
                     },
                     ease: gsap.Linear.easeNone
                 }
@@ -865,7 +905,7 @@
                         // anchorY: 1,
                         rotation: 360
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
             {
@@ -878,10 +918,10 @@
                         anchorY: 1,
                         scale: 1,
                         rotation: 0,
-                        y: "-=" + ((target.height) / 2),
+                        y: '-=' + ((target.height) / 2),
                         x: '+=' + ((target.width) / 2)
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
         ];
@@ -896,7 +936,7 @@
     function wheelRotateIn(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -907,7 +947,7 @@
                     pixi: {
                         alpha: 0,
                         rotation: 360,
-                        x: "+=200"
+                        x: '+=200'
                     },
                     ease: gsap.Power0.easeNone
                 }
@@ -919,9 +959,9 @@
                     pixi: {
                         alpha: 1,
                         rotation: -20,
-                        x: "-=220"
+                        x: '-=220'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
             {
@@ -933,7 +973,7 @@
                         rotation: 0,
                         x: '+=20'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
         ];
@@ -942,7 +982,7 @@
     function topShockIn(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -953,7 +993,7 @@
                     pixi: {
                         alpha: 0,
                         scale: 0.1 * this.ratio,
-                        y: "-=220"
+                        y: '-=220'
                     }
                 }
             },
@@ -964,7 +1004,7 @@
                     pixi: {
                         alpha: 1,
                         scale: 0.2 * this.ratio,
-                        y: "-=30"
+                        y: '-=30'
                     },
                     ease: gsap.Power0.easeNone
                 }
@@ -976,9 +1016,9 @@
                     pixi: {
                         alpha: 1,
                         scale: 0.675 * this.ratio,
-                        y: "+=310"
+                        y: '+=310'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.55,0.055 0.675,0.19 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.55,0.055 0.675,0.19 1,1')
                 }
             },
             {
@@ -990,7 +1030,7 @@
                         scale: 1 * this.ratio,
                         y: '-=60'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.175,0.885 0.32,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.175,0.885 0.32,1 1,1')
                 }
             },
         ];
@@ -999,7 +1039,7 @@
     function breakIn(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         // sprite.anchor.set(0, 1)
         // sprite.x -= sprite.width / 2
@@ -1013,8 +1053,8 @@
                     pixi: {
                         anchorX: 0,
                         anchorY: 1,
-                        x: "-=" + (target.width / 2),
-                        y: "+=" + (target.height / 2)
+                        x: '-=' + (target.width / 2),
+                        y: '+=' + (target.height / 2)
                     }
                 }
             },
@@ -1024,7 +1064,7 @@
                 vars: {
                     pixi: {
                         alpha: 1,
-                        x: "+=300",
+                        x: '+=300',
                         skewX: 30
                     }
                 }
@@ -1036,7 +1076,7 @@
                     pixi: {
                         alpha: 1,
                         skewX: 8,
-                        x: "-=300"
+                        x: '-=300'
                     },
                     ease: gsap.Power0.easeNone
                 }
@@ -1083,7 +1123,7 @@
     function swashOut(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -1094,7 +1134,7 @@
                     pixi: {
                         scale: 0.8 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
             {
@@ -1105,7 +1145,7 @@
                         alpha: 0,
                         scale: 0
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
         ];
@@ -1114,7 +1154,7 @@
     function foolishIn(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -1127,7 +1167,7 @@
                         scale: 0,
                         rotation: 360
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
             {
@@ -1141,7 +1181,7 @@
                         scale: 0.5 * this.ratio,
                         rotation: 0
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
             {
@@ -1153,7 +1193,7 @@
                         anchorX: 1,
                         anchorY: 1
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
             {
@@ -1165,7 +1205,7 @@
                         anchorX: 0,
                         anchorY: 1
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
             {
@@ -1177,7 +1217,7 @@
                         anchorX: 0,
                         anchorY: 0
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
             {
@@ -1190,7 +1230,7 @@
                         anchorY: 0.5,
                         scale: 1 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.25,0.1 0.25,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.25,0.1 0.25,1 1,1')
                 }
             },
         ];
@@ -1199,7 +1239,7 @@
     function hingeOut(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         // sprite.anchor.set(0, 0)
         // sprite.x -= sprite.width / 2
@@ -1213,8 +1253,8 @@
                     pixi: {
                         anchorX: 0,
                         anchorY: 0,
-                        x: "-=" + (target.width / 2),
-                        y: "-=" + (target.height / 2)
+                        x: '-=' + (target.width / 2),
+                        y: '-=' + (target.height / 2)
                     }
                 }
             },
@@ -1225,7 +1265,7 @@
                     pixi: {
                         rotation: 70
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1233,9 +1273,9 @@
                 duration: 0.2 * duration,
                 vars: {
                     pixi: {
-                        rotation: "-=40"
+                        rotation: '-=40'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1243,9 +1283,9 @@
                 duration: 0.2 * duration,
                 vars: {
                     pixi: {
-                        rotation: "+=20"
+                        rotation: '+=20'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1253,9 +1293,9 @@
                 duration: 0.2 * duration,
                 vars: {
                     pixi: {
-                        rotation: "-=15"
+                        rotation: '-=15'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1266,7 +1306,7 @@
                         y: '+=300',
                         alpha: 0
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
         ];
@@ -1281,7 +1321,7 @@
     function heartBeat(target, duration) {
         if (duration === void 0) { duration = 1000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -1292,7 +1332,7 @@
                     pixi: {
                         scale: 1.3 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1302,7 +1342,7 @@
                     pixi: {
                         scale: 1 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1312,7 +1352,7 @@
                     pixi: {
                         scale: 1.3 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1322,7 +1362,7 @@
                     pixi: {
                         scale: 1 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
         ];
@@ -1331,7 +1371,7 @@
     function jelly(target, duration) {
         if (duration === void 0) { duration = 2000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -1343,7 +1383,7 @@
                         scaleX: 1.25 * this.ratio,
                         scaleY: 0.75 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1354,7 +1394,7 @@
                         scaleX: 0.75 * this.ratio,
                         scaleY: 1.25 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1365,7 +1405,7 @@
                         scaleX: 1.15 * this.ratio,
                         scaleY: 0.85 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1376,7 +1416,7 @@
                         scaleX: 0.95 * this.ratio,
                         scaleY: 1.05 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1387,7 +1427,7 @@
                         scaleX: 1.05 * this.ratio,
                         scaleY: 0.95 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1398,7 +1438,7 @@
                         scaleX: 1 * this.ratio,
                         scaleY: 1 * this.ratio
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
         ];
@@ -1407,7 +1447,7 @@
     function swing1(target, duration) {
         if (duration === void 0) { duration = 2000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -1418,7 +1458,7 @@
                     pixi: {
                         rotation: -30
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1428,7 +1468,7 @@
                     pixi: {
                         rotation: 30
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1438,7 +1478,7 @@
                     pixi: {
                         rotation: -30
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
         ];
@@ -1451,7 +1491,7 @@
     function swing2(target, duration) {
         if (duration === void 0) { duration = 2000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -1462,7 +1502,7 @@
                     pixi: {
                         rotation: 15
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1472,7 +1512,7 @@
                     pixi: {
                         rotation: -10
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1482,7 +1522,7 @@
                     pixi: {
                         rotation: 5
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1492,7 +1532,7 @@
                     pixi: {
                         rotation: -2
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1502,7 +1542,7 @@
                     pixi: {
                         rotation: 0
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
         ];
@@ -1518,7 +1558,7 @@
     function swing3(target, duration) {
         if (duration === void 0) { duration = 2000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -1530,7 +1570,7 @@
                         rotation: -5,
                         x: '-=25'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1541,7 +1581,7 @@
                         rotation: 3,
                         x: '+=45'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1552,7 +1592,7 @@
                         rotation: -3,
                         x: '-=35'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1563,7 +1603,7 @@
                         rotation: 2,
                         x: '+=25'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1574,7 +1614,7 @@
                         rotation: -1,
                         x: '-=15'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1585,7 +1625,7 @@
                         rotation: 0,
                         x: '+=5'
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
         ];
@@ -1594,7 +1634,7 @@
     function swing4(target, duration) {
         if (duration === void 0) { duration = 2000; }
         if (typeof duration !== 'number') {
-            throw new Error("animation time must be a number!");
+            throw new Error('animation time must be a number!');
         }
         duration = duration / 1000;
         var animations = [
@@ -1606,7 +1646,7 @@
                         scale: 0.8 * this.ratio,
                         rotation: -5
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1617,7 +1657,7 @@
                         scale: 1.1 * this.ratio,
                         rotation: 3
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1628,7 +1668,7 @@
                         scale: 1.1 * this.ratio,
                         rotation: -3
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1639,7 +1679,7 @@
                         scale: 1.1 * this.ratio,
                         rotation: 3
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1650,7 +1690,7 @@
                         scale: 1.1 * this.ratio,
                         rotation: -3
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1661,7 +1701,7 @@
                         scale: 1.1 * this.ratio,
                         rotation: 3
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1672,7 +1712,7 @@
                         scale: 1.1 * this.ratio,
                         rotation: -3
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1683,7 +1723,7 @@
                         scale: 1.1 * this.ratio,
                         rotation: 3
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
             {
@@ -1694,7 +1734,7 @@
                         scale: 1 * this.ratio,
                         rotation: 0
                     },
-                    ease: CustomEase.create("custom", "M0,0 C0.42,0 0.58,1 1,1")
+                    ease: CustomEase.create('custom', 'M0,0 C0.42,0 0.58,1 1,1')
                 }
             },
         ];
