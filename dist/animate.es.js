@@ -450,6 +450,8 @@ function animation(target, options) {
 /**
  * animate
  *
+ * @module Animation
+ *
  * @param target - Animation target
  * @param { AnimateOptions } options - Animation options
  */
@@ -461,6 +463,8 @@ function animate(target, options) {
 var tl = new TimelineLite();
 /**
  * moveTo
+ *
+ * @module Animation
  *
  * @param { Object } target - target
  * @param { Number } x - coordinate x
@@ -493,6 +497,8 @@ function moveTo(target, x, y, duration, ease) {
 /**
  * blink
  *
+ * @module Animation
+ *
  * @param { Object } target - target
  * @param { Number } duration - animation duration
  * @param { Boolean } repeat - animation repeat times
@@ -519,6 +525,8 @@ function blink(target, duration, repeat) {
 }
 /**
  * shakeInAlarm
+ *
+ * @module Animation
  *
  * @param { Object } target - target
  *
@@ -707,6 +715,9 @@ function shakeInHard(target) {
     tl.eventCallback('onReverseComplete', function () { tl.restart(); });
 }
 /**
+ * bomb1
+ *
+ * @module Animation
  *
  * @param { Object } target - target
  * @param { Number } duration - animation duration

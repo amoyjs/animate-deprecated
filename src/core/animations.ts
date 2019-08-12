@@ -8,6 +8,8 @@ const tl = new TimelineLite()
 /**
  * moveTo
  * 
+ * @module Animation
+ * 
  * @param { Object } target - target
  * @param { Number } x - coordinate x
  * @param { Number } y - coordinate y
@@ -41,6 +43,8 @@ export function moveTo(target: any, x: any, y: any, duration: number, ease: any)
 /**
  * blink
  * 
+ * @module Animation
+ * 
  * @param { Object } target - target
  * @param { Number } duration - animation duration
  * @param { Boolean } repeat - animation repeat times
@@ -69,6 +73,8 @@ export function blink(target: any, duration: number, repeat: number) {
 
 /**
  * shakeInAlarm
+ * 
+ * @module Animation
  * 
  * @param { Object } target - target
  * 
@@ -263,7 +269,10 @@ export function shakeInHard(target: any) {
 }
 
 /**
+ * bomb1
  *
+ * @module Animation
+ * 
  * @param { Object } target - target
  * @param { Number } duration - animation duration
  *

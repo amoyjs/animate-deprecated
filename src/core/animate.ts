@@ -55,6 +55,8 @@ function animation(target: any, options: any) {
 /**
  * animate
  * 
+ * @module Animation
+ * 
  * @param target - Animation target
  * @param { AnimateOptions } options - Animation options
  */

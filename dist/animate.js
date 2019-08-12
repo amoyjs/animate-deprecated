@@ -453,6 +453,8 @@
     /**
      * animate
      *
+     * @module Animation
+     *
      * @param target - Animation target
      * @param { AnimateOptions } options - Animation options
      */
@@ -464,6 +466,8 @@
     var tl = new gsap.TimelineLite();
     /**
      * moveTo
+     *
+     * @module Animation
      *
      * @param { Object } target - target
      * @param { Number } x - coordinate x
@@ -496,6 +500,8 @@
     /**
      * blink
      *
+     * @module Animation
+     *
      * @param { Object } target - target
      * @param { Number } duration - animation duration
      * @param { Boolean } repeat - animation repeat times
@@ -522,6 +528,8 @@
     }
     /**
      * shakeInAlarm
+     *
+     * @module Animation
      *
      * @param { Object } target - target
      *
@@ -710,6 +718,9 @@
         tl.eventCallback('onReverseComplete', function () { tl.restart(); });
     }
     /**
+     * bomb1
+     *
+     * @module Animation
      *
      * @param { Object } target - target
      * @param { Number } duration - animation duration
