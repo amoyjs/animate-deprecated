@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+import { AnimateOptions } from '../types'
 // @ts-ignore
 import { TweenLite } from 'gsap'
 // @ts-ignore
@@ -51,8 +52,12 @@ function animation(target: any, options: any) {
     })
 }
 
-
-
-export function animate(target: any, options: any) {
+/**
+ * animate
+ * 
+ * @param target - Animation target
+ * @param { AnimateOptions } options - Animation options
+ */
+export function animate(target: any, options: AnimateOptions) {
     animation(target, options)
 }
