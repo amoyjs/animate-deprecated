@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 import { AnimateOptions } from '../types'
 // @ts-ignore
-import { TweenLite } from 'gsap'
+import * as gsap from 'gsap'
 // @ts-ignore
 import PixiPlugin from 'gsap/PixiPlugin'
 
@@ -13,18 +13,19 @@ function animation(target: any, options: any) {
         from = {},
         ease,
         delay = 0,
-        duration = 1000,
+        duration = 3000,
         repeat = 0,
-        onStart = () => { },
-        onUpdate = () => { },
-        onComplete = () => { },
-        onReverseComplete = () => { },
+        onStart = () => {},
+        onUpdate = () => {},
+        onComplete = () => {},
+        onReverseComplete = () => {},
         ...rest
     } = options
     let count = 1
     const action = Object.keys(to).length > 0 ? 'to' : (Object.keys(from).length > 0 ? 'from' : 'to')
     const props = action === 'to' ? to : from
-    const animate = TweenLite[action](target, duration / 1000, {
+    const animate = gsap.TweenLite[action](target, duration / 1000, {
+        ease: getEase(ease),
         pixi: {
             ...rest,
             ...props,
@@ -62,4 +63,16 @@ function animation(target: any, options: any) {
  */
 export function animate(target: any, options: AnimateOptions) {
     animation(target, options)
+}
+
+function getEase(ease?: string) {
+    if (['ease-in', 'ease-out', 'ease-in-out'].includes(ease)) {
+        return gsap.Power4[camelize(ease)]
+    } else {
+        return gsap.Power4.easeNone
+    }
+}
+
+function camelize(string: string) {
+    return string.replace(/[_.-](\w|$)/g, (_, $) => $.toUpperCase())
 }
