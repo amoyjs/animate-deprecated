@@ -5,6 +5,8 @@ export interface AnimateOptions {
     width?: number
     height?: number
     alpha?: number
+    scale?: number
+    rotation?: number
     // TweenLite
     duration?: number
     delay?: number

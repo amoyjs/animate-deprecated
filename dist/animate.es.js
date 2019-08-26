@@ -2851,7 +2851,7 @@ function __rest(s, e) {
 
 PixiPlugin$1.registerPIXI(PIXI);
 function animation(target, options) {
-    var _a = options.to, to = _a === void 0 ? {} : _a, _b = options.from, from = _b === void 0 ? {} : _b, ease = options.ease, _c = options.delay, _d = options.duration, duration = _d === void 0 ? 3000 : _d, _e = options.repeat, repeat = _e === void 0 ? 0 : _e, _f = options.onStart, onStart = _f === void 0 ? function () { } : _f, _g = options.onUpdate, onUpdate = _g === void 0 ? function () { } : _g, _h = options.onComplete, onComplete = _h === void 0 ? function () { } : _h, _j = options.onReverseComplete, onReverseComplete = _j === void 0 ? function () { } : _j, rest = __rest(options, ["to", "from", "ease", "delay", "duration", "repeat", "onStart", "onUpdate", "onComplete", "onReverseComplete"]);
+    var _a = options.to, to = _a === void 0 ? {} : _a, _b = options.from, from = _b === void 0 ? {} : _b, ease = options.ease, _c = options.delay, _d = options.duration, duration = _d === void 0 ? 1000 : _d, _e = options.repeat, repeat = _e === void 0 ? 0 : _e, _f = options.onStart, onStart = _f === void 0 ? function () { } : _f, _g = options.onUpdate, onUpdate = _g === void 0 ? function () { } : _g, _h = options.onComplete, onComplete = _h === void 0 ? function () { } : _h, _j = options.onReverseComplete, onReverseComplete = _j === void 0 ? function () { } : _j, rest = __rest(options, ["to", "from", "ease", "delay", "duration", "repeat", "onStart", "onUpdate", "onComplete", "onReverseComplete"]);
     var count = 1;
     var action = Object.keys(to).length > 0 ? 'to' : (Object.keys(from).length > 0 ? 'from' : 'to');
     var props = action === 'to' ? to : from;
@@ -2879,6 +2879,7 @@ function animation(target, options) {
             onReverseComplete(animate);
         }
     });
+    return animate;
 }
 /**
  * animate
@@ -2889,7 +2890,7 @@ function animation(target, options) {
  * @param { AnimateOptions } options - Animation options
  */
 function animate(target, options) {
-    animation(target, options);
+    return animation(target, options);
 }
 function getEase(ease) {
     if (['ease-in', 'ease-out', 'ease-in-out'].includes(ease)) {
@@ -2934,6 +2935,28 @@ function moveTo(target, x, y, duration, ease) {
     animate(target, {
         x: position.x,
         y: position.y,
+        ease: ease,
+        duration: duration
+    });
+}
+function moveBy(target, x, y, duration, ease) {
+    var position = {
+        x: 0,
+        y: 0
+    };
+    if (typeof x === 'number' && typeof y === 'number') {
+        position.x = x;
+        position.y = y;
+    }
+    if (typeof x === 'object') {
+        position.x = x.x;
+        position.y = x.y;
+        duration = y;
+        ease = duration;
+    }
+    animate(target, {
+        x: target.x + position.x,
+        y: target.y + position.y,
         ease: ease,
         duration: duration
     });
@@ -3045,6 +3068,18 @@ function shakeInVetc(target) {
     animations.map(function (animation) { return tl.to(target, animation.duration, animation.vars); });
     tl.eventCallback('onComplete', function () { tl.reverse(); });
     tl.eventCallback('onReverseComplete', function () { tl.restart(); });
+}
+function cute(target) {
+    // 
+}
+function float(target) {
+    var tl = animate(target, {
+        duration: 3000,
+        y: target.y + 30,
+        ease: 'ease-in-out'
+    });
+    tl.eventCallback('onComplete', function () { return tl.reverse(); });
+    tl.eventCallback('onReverseComplete', function () { return tl.restart(); });
 }
 function shakeInRotate(target) {
     var animations = [
@@ -4195,10 +4230,13 @@ function swing4(target, duration) {
 
 var animations = /*#__PURE__*/Object.freeze({
 	moveTo: moveTo,
+	moveBy: moveBy,
 	blink: blink,
 	shakeInAlarm: shakeInAlarm,
 	shakeInHorz: shakeInHorz,
 	shakeInVetc: shakeInVetc,
+	cute: cute,
+	float: float,
 	shakeInRotate: shakeInRotate,
 	shakeInHard: shakeInHard,
 	bomb1: bomb1,
@@ -4754,5 +4792,5 @@ if (window.query)
     window.query.extend(queryAnimate);
 
 export default animate;
-export { LoadAnimation, blink, bomb1, breakIn, elasticMove, elasticScale, foolishIn, freeFall, heartBeat, hingeOut, jelly, moveTo, queryAnimate, shakeInAlarm, shakeInHard, shakeInHorz, shakeInRotate, shakeInVetc, spiralRotateIn, swashOut, swing1, swing2, swing3, swing4, topShockIn, wheelRotateIn };
+export { LoadAnimation, blink, bomb1, breakIn, cute, elasticMove, elasticScale, float, foolishIn, freeFall, heartBeat, hingeOut, jelly, moveBy, moveTo, queryAnimate, shakeInAlarm, shakeInHard, shakeInHorz, shakeInRotate, shakeInVetc, spiralRotateIn, swashOut, swing1, swing2, swing3, swing4, topShockIn, wheelRotateIn };
 //# sourceMappingURL=animate.es.js.map

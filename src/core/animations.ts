@@ -1,5 +1,6 @@
 // @ts-ignore
 import { TimelineLite, Linear, Power0, Bounce, Elastic } from 'gsap'
+import TweenLite from 'gsap/TweenLite'
 import CustomEase from './customEase'
 import { animate } from './animate'
 
@@ -35,6 +36,30 @@ export function moveTo(target: any, x: any, y: any, duration: number, ease: any)
     animate(target, {
         x: position.x,
         y: position.y,
+        ease,
+        duration,
+    })
+}
+
+export function moveBy(target: any, x: any, y: any, duration: number, ease: any) {
+    const position = {
+        x: 0,
+        y: 0,
+    }
+    if (typeof x === 'number' && typeof y === 'number') {
+        position.x = x
+        position.y = y
+    }
+    if (typeof x === 'object') {
+        position.x = x.x
+        position.y = x.y
+        duration = y
+        ease = duration
+    }
+
+    animate(target, {
+        x: target.x + position.x,
+        y: target.y + position.y,
         ease,
         duration,
     })
@@ -151,6 +176,20 @@ export function shakeInVetc(target: any) {
     animations.map((animation) => tl.to(target, animation.duration, animation.vars))
     tl.eventCallback('onComplete', () => { tl.reverse() })
     tl.eventCallback('onReverseComplete', () => { tl.restart() })
+}
+
+export function cute(target: any) {
+    // 
+}
+
+export function float(target: any) {
+    const tl = animate(target, {
+        duration: 3000,
+        y: target.y + 30,
+        ease: 'ease-in-out',
+    })
+    tl.eventCallback('onComplete', () => tl.reverse())
+    tl.eventCallback('onReverseComplete', () => tl.restart())
 }
 
 export function shakeInRotate(target: any) {

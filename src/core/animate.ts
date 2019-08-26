@@ -13,7 +13,7 @@ function animation(target: any, options: any) {
         from = {},
         ease,
         delay = 0,
-        duration = 3000,
+        duration = 1000,
         repeat = 0,
         onStart = () => {},
         onUpdate = () => {},
@@ -51,6 +51,8 @@ function animation(target: any, options: any) {
             onReverseComplete(animate)
         },
     })
+
+    return animate
 }
 
 /**
@@ -62,7 +64,7 @@ function animation(target: any, options: any) {
  * @param { AnimateOptions } options - Animation options
  */
 export function animate(target: any, options: AnimateOptions) {
-    animation(target, options)
+    return animation(target, options)
 }
 
 function getEase(ease?: string) {
