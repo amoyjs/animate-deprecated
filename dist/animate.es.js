@@ -2932,7 +2932,7 @@ function moveTo(target, x, y, duration, ease) {
         duration = y;
         ease = duration;
     }
-    animate(target, {
+    return animate(target, {
         x: position.x,
         y: position.y,
         ease: ease,
@@ -2954,7 +2954,7 @@ function moveBy(target, x, y, duration, ease) {
         duration = y;
         ease = duration;
     }
-    animate(target, {
+    return animate(target, {
         x: target.x + position.x,
         y: target.y + position.y,
         ease: ease,

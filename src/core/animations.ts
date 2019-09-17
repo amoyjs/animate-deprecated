@@ -33,7 +33,7 @@ export function moveTo(target: any, x: any, y: any, duration: number, ease: any)
         ease = duration
     }
 
-    animate(target, {
+    return animate(target, {
         x: position.x,
         y: position.y,
         ease,
@@ -57,7 +57,7 @@ export function moveBy(target: any, x: any, y: any, duration: number, ease: any)
         ease = duration
     }
 
-    animate(target, {
+    return animate(target, {
         x: target.x + position.x,
         y: target.y + position.y,
         ease,

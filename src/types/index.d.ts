@@ -14,8 +14,8 @@ export interface AnimateOptions {
     repeat?: number | 'infinite'
     onStart?: () => {}
     onUpdate?: (progress: number) => {}
-    onComplete?: (animation: object) => {}
-    onReverseComplete?: (animation: object) => {}
+    onComplete?: () => void
+    onReverseComplete?: () => void
 }
 
 export class queryAnimate {
