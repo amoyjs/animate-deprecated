@@ -1,9 +1,8 @@
 import { animate as _animate } from './animate'
-import { AnimateOptions } from '../types'
 import * as animations from './animations'
 
 export const queryAnimate = {
-    animate(options: AnimateOptions) {
+    animate(options: ANIMATE.AnimateOptions) {
         for (let i = 0; i < this.length; i++) {
             _animate(this[i], options)
         }

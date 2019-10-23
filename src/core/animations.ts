@@ -1,6 +1,5 @@
 // @ts-ignore
 import { TimelineLite, Linear, Power0, Bounce, Elastic } from 'gsap'
-import TweenLite from 'gsap/TweenLite'
 import CustomEase from './customEase'
 import { animate } from './animate'
 

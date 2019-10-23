@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js'
-import { AnimateOptions } from '../types'
 // @ts-ignore
 import * as gsap from 'gsap'
 // @ts-ignore
@@ -11,6 +10,7 @@ function animation(target: any, options: any) {
     const {
         to = {},
         from = {},
+        yoyo,
         ease,
         delay = 0,
         duration = 1000,
@@ -27,15 +27,16 @@ function animation(target: any, options: any) {
     const animate = gsap.TweenLite[action](target, duration / 1000, {
         ease: getEase(ease),
         pixi: {
-            ...rest,
             ...props,
         },
+        ...rest,
         onStart() {
             onStart(animate)
         },
         onComplete() {
             onComplete(animate)
             if (repeat === 'infinite' || count < repeat) {
+                yoyo ? animate.reverse() : animate.restart()
                 count++
             }
         },
@@ -63,7 +64,7 @@ function animation(target: any, options: any) {
  * @param target - Animation target
  * @param { AnimateOptions } options - Animation options
  */
-export function animate(target: any, options: AnimateOptions) {
+export function animate(target: any, options: ANIMATE.AnimateOptions) {
     return animation(target, options)
 }
 
